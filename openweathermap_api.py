@@ -21,6 +21,9 @@ class OpenWeatherMapAPI(object):
         if 'units' not in kwargs:
             kwargs['units'] = 'metric'
 
+        if 'lang' not in kwargs:
+            kwargs['lang'] = 'zh_tw'
+
         return self._requests(self.WEATHER_URL, **kwargs)
 
 if __name__ == '__main__':
