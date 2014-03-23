@@ -18,6 +18,9 @@ class OpenWeatherMapAPI(object):
         return result.json()
 
     def get_weather(self, **kwargs):
+        if 'units' not in kwargs:
+            kwargs['units'] = 'metric'
+
         return self._requests(self.WEATHER_URL, **kwargs)
 
 if __name__ == '__main__':
