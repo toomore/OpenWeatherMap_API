@@ -9,6 +9,7 @@ class OpenWeatherMapAPI(object):
     API_URL = 'http://api.openweathermap.org/'
     WEATHER_URL = urljoin(API_URL, 'data/%s/weather' % VERSION)
     FORECAST_URL = urljoin(API_URL, 'data/%s/forecast' % VERSION)
+    HISTORY_URL = urljoin(API_URL, 'data/%s/history/city' % VERSION)
 
     def __init__(self, appid):
         self.appid = appid
@@ -30,8 +31,12 @@ class OpenWeatherMapAPI(object):
     def get_forecast(self, **kwargs):
         return self._requests(self.FORECAST_URL, **kwargs)
 
+    def get_history(self, **kwargs):
+        return self._requests(self.HISTORY_URL, **kwargs)
+
 if __name__ == '__main__':
     from pprint import pprint
     #pprint(OpenWeatherMapAPI(setting.APPID).get_weather(q='kaohsiung'))
     pprint(OpenWeatherMapAPI(setting.APPID).get_weather(id=1673820))
     pprint(OpenWeatherMapAPI(setting.APPID).get_forecast(id=1673820))
+    pprint(OpenWeatherMapAPI(setting.APPID).get_history(id=1673820))
