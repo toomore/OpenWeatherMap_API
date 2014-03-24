@@ -39,4 +39,4 @@ if __name__ == '__main__':
     #pprint(OpenWeatherMapAPI(setting.APPID).get_weather(q='kaohsiung'))
     pprint(OpenWeatherMapAPI(setting.APPID).get_weather(id=1673820))
     pprint(OpenWeatherMapAPI(setting.APPID).get_forecast(id=1673820))
-    pprint(OpenWeatherMapAPI(setting.APPID).get_history(id=1673820))
+    pprint(OpenWeatherMapAPI(setting.APPID).get_history(id=1673820, type='hour'))
