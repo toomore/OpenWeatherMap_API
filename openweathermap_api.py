@@ -32,6 +32,9 @@ class OpenWeatherMapAPI(object):
         return self._requests(self.WEATHER_URL, **kwargs)
 
     def get_forecast(self, **kwargs):
+        ''' Get forecast data.
+            wiki: http://bugs.openweathermap.org/projects/api/wiki/Api_2_5_forecast
+        '''
         return self._requests(self.FORECAST_URL, **kwargs)
 
     def get_history(self, **kwargs):
