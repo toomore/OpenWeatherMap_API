@@ -26,6 +26,9 @@ class OpenWeatherMapAPI(object):
         return result.json()
 
     def get_weather(self, **kwargs):
+        '''Get current weather data.
+           wiki: http://bugs.openweathermap.org/projects/api/wiki/Api_2_5_weather
+        '''
         return self._requests(self.WEATHER_URL, **kwargs)
 
     def get_forecast(self, **kwargs):
@@ -37,6 +40,7 @@ class OpenWeatherMapAPI(object):
 if __name__ == '__main__':
     from pprint import pprint
     #pprint(OpenWeatherMapAPI(setting.APPID).get_weather(q='kaohsiung'))
-    pprint(OpenWeatherMapAPI(setting.APPID).get_weather(id=1673820))
-    pprint(OpenWeatherMapAPI(setting.APPID).get_forecast(id=1673820))
-    pprint(OpenWeatherMapAPI(setting.APPID).get_history(id=1673820, type='hour'))
+    openweathermapapi = OpenWeatherMapAPI(setting.APPID)
+    pprint(openweathermapapi.get_weather(id=1673820))
+    pprint(openweathermapapi.get_forecast(id=1673820))
+    pprint(openweathermapapi.get_history(id=1673820, type='hour'))
