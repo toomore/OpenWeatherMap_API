@@ -38,6 +38,9 @@ class OpenWeatherMapAPI(object):
         return self._requests(self.FORECAST_URL, **kwargs)
 
     def get_history(self, **kwargs):
+        ''' Get city History
+            wiki: http://bugs.openweathermap.org/projects/api/wiki/Api_2_5_history
+        '''
         return self._requests(self.HISTORY_URL, **kwargs)
 
 if __name__ == '__main__':
