@@ -3,13 +3,14 @@ import requests
 import setting
 from urlparse import urljoin
 
+VERSION = '2.5'
+API_URL = 'http://api.openweathermap.org/'
+WEATHER_URL = urljoin(API_URL, 'data/%s/weather' % VERSION)
+FORECAST_URL = urljoin(API_URL, 'data/%s/forecast' % VERSION)
+HISTORY_URL = urljoin(API_URL, 'data/%s/history/city' % VERSION)
+
 
 class OpenWeatherMapAPI(object):
-    VERSION = '2.5'
-    API_URL = 'http://api.openweathermap.org/'
-    WEATHER_URL = urljoin(API_URL, 'data/%s/weather' % VERSION)
-    FORECAST_URL = urljoin(API_URL, 'data/%s/forecast' % VERSION)
-    HISTORY_URL = urljoin(API_URL, 'data/%s/history/city' % VERSION)
 
     def __init__(self, appid):
         self.appid = appid
@@ -29,19 +30,19 @@ class OpenWeatherMapAPI(object):
         '''Get current weather data.
            wiki: http://bugs.openweathermap.org/projects/api/wiki/Api_2_5_weather
         '''
-        return self._requests(self.WEATHER_URL, **kwargs)
+        return self._requests(WEATHER_URL, **kwargs)
 
     def get_forecast(self, **kwargs):
         ''' Get forecast data.
             wiki: http://bugs.openweathermap.org/projects/api/wiki/Api_2_5_forecast
         '''
-        return self._requests(self.FORECAST_URL, **kwargs)
+        return self._requests(FORECAST_URL, **kwargs)
 
     def get_history(self, **kwargs):
         ''' Get city History
             wiki: http://bugs.openweathermap.org/projects/api/wiki/Api_2_5_history
         '''
-        return self._requests(self.HISTORY_URL, **kwargs)
+        return self._requests(HISTORY_URL, **kwargs)
 
 if __name__ == '__main__':
     from pprint import pprint
