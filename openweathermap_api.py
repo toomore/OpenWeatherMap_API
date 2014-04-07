@@ -1,4 +1,5 @@
 # -*- coding:utf8 -*-
+''' OpenWeatherMapAPI '''
 import requests
 import setting
 from urlparse import urljoin
@@ -11,6 +12,7 @@ HISTORY_URL = urljoin(API_URL, 'data/%s/history/city' % VERSION)
 
 
 class OpenWeatherMapAPI(object):
+    ''' OpenWeatherMapAPI '''
     APPID = ''
 
     def __init__(self, appid):
@@ -18,6 +20,7 @@ class OpenWeatherMapAPI(object):
 
     @classmethod
     def _requests(cls, path, **kwargs):
+        ''' Fetch data. '''
         if 'units' not in kwargs:
             kwargs['units'] = 'metric'
 
@@ -52,8 +55,8 @@ class OpenWeatherMapAPI(object):
 if __name__ == '__main__':
     from pprint import pprint
     #pprint(OpenWeatherMapAPI(setting.APPID).get_weather(q='kaohsiung'))
-    openweathermapapi = OpenWeatherMapAPI(setting.APPID)
-    pprint(openweathermapapi.get_weather(id=1673820))
+    OPEN_WEATHER_MAPAPI = OpenWeatherMapAPI(setting.APPID)
+    pprint(OPEN_WEATHER_MAPAPI.get_weather(id=1673820))
     pprint(OpenWeatherMapAPI.get_weather(id=1673820))
-    pprint(openweathermapapi.get_forecast(id=1673820))
-    pprint(openweathermapapi.get_history(id=1673820, type='hour'))
+    pprint(OPEN_WEATHER_MAPAPI.get_forecast(id=1673820))
+    pprint(OPEN_WEATHER_MAPAPI.get_history(id=1673820, type='hour'))
