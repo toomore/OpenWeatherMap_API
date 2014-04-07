@@ -26,7 +26,6 @@ class OpenWeatherMapAPI(object):
 
         result = requests.get(path, params=kwargs,
                 headers={'x-api-key': cls.APPID})
-        print cls.APPID
         return result.json()
 
     @classmethod
