@@ -1,5 +1,8 @@
 # -*- coding:utf8 -*-
-''' OpenWeatherMapAPI '''
+''' OpenWeatherMapAPI
+
+    city list: http://openweathermap.org/help/city_list.txt
+'''
 import requests
 import setting
 from urlparse import urljoin
