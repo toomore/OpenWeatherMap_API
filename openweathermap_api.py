@@ -82,9 +82,7 @@ class OpenWeatherMapAPI(object):
             else:
                 result = {i[1]: i for i in csv_files}
 
-            return result
-
-        return {}
+        return result
 
 if __name__ == '__main__':
     from pprint import pprint
