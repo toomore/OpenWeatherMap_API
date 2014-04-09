@@ -61,6 +61,7 @@ class OpenWeatherMapAPI(object):
         '''
         return cls._requests(HISTORY_URL, **kwargs)
 
+    @classmethod
     def get_country_list(cls, keyby=None):
         ''' Get country list
             city list: http://openweathermap.org/help/city_list.txt
@@ -93,4 +94,4 @@ if __name__ == '__main__':
     #pprint(OpenWeatherMapAPI.get_weather(id=1673820))
     #pprint(OPEN_WEATHER_MAPAPI.get_forecast(id=1673820))
     #pprint(OPEN_WEATHER_MAPAPI.get_history(id=1673820, type='hour'))
-    pprint(OPEN_WEATHER_MAPAPI.get_country_list()['Kaohsiung'])
+    pprint(OpenWeatherMapAPI.get_country_list()['Kaohsiung'])
