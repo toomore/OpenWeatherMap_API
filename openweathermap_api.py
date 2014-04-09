@@ -77,8 +77,13 @@ class OpenWeatherMapAPI(object):
             result = {}
             csv_files.next()
             if keyby:
-                key_no = {'id': 0, 'nm': 1, 'lat': 2, 'lon': 3, 'countryCode': 4}
-                result = {i[key_no[keyby]]: i for i in csv_files}
+                if keyby is not 'countryCode':
+                    key_no = {'id': 0, 'nm': 1, 'lat': 2, 'lon': 3, 'countryCode': 4}
+                    result = {i[key_no[keyby]]: i for i in csv_files}
+                else:
+                    for i in csv_files:
+                        result.setdefault(i[4], [])
+                        result[i[4]].append(i)
             else:
                 result = {i[1]: i for i in csv_files}
 
@@ -93,3 +98,4 @@ if __name__ == '__main__':
     #pprint(OPEN_WEATHER_MAPAPI.get_forecast(id=1673820))
     #pprint(OPEN_WEATHER_MAPAPI.get_history(id=1673820, type='hour'))
     pprint(OpenWeatherMapAPI.get_country_list()['Kaohsiung'])
+    pprint(OpenWeatherMapAPI.get_country_list('countryCode')['TW'])
