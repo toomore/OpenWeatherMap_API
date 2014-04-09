@@ -3,6 +3,7 @@
 *.pylint
 *.rdb
 *.swp
+*.txt
 .env
 build
 log

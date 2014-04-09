@@ -2,6 +2,7 @@
 ''' OpenWeatherMapAPI '''
 import cStringIO
 import csv
+import os
 import requests
 import setting
 from urlparse import urljoin
@@ -65,18 +66,24 @@ class OpenWeatherMapAPI(object):
             city list: http://openweathermap.org/help/city_list.txt
             ['id', 'nm', 'lat', 'lon', 'countryCode']
         '''
-        content = cStringIO.StringIO(cls._requests(COUNTRY_LIST_URL, notjson=True))
-        csv_files = csv.reader(content, delimiter='\t')
+        if not os.path.isfile('./city_list.txt'):
+            with open('./city_list.txt', 'w+') as files:
+                files.write(cls._requests(COUNTRY_LIST_URL, notjson=True))
 
-        result = {}
-        csv_files.next()
-        if keyby:
-            key_no = {'id': 0, 'nm': 1, 'lat': 2, 'lon': 3, 'countryCode': 4}
-            result = {i[key_no[keyby]]: i for i in csv_files}
-        else:
-            result = {i[1]: i for i in csv_files}
+        with open('./city_list.txt', 'r+') as files:
+            csv_files = csv.reader(files, delimiter='\t')
 
-        return result
+            result = {}
+            csv_files.next()
+            if keyby:
+                key_no = {'id': 0, 'nm': 1, 'lat': 2, 'lon': 3, 'countryCode': 4}
+                result = {i[key_no[keyby]]: i for i in csv_files}
+            else:
+                result = {i[1]: i for i in csv_files}
+
+            return result
+
+        return {}
 
 if __name__ == '__main__':
     from pprint import pprint
