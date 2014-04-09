@@ -1,8 +1,7 @@
 # -*- coding:utf8 -*-
-''' OpenWeatherMapAPI
-
-    city list: http://openweathermap.org/help/city_list.txt
-'''
+''' OpenWeatherMapAPI '''
+import cStringIO
+import csv
 import requests
 import setting
 from urlparse import urljoin
@@ -12,6 +11,7 @@ API_URL = 'http://api.openweathermap.org/'
 WEATHER_URL = urljoin(API_URL, 'data/%s/weather' % VERSION)
 FORECAST_URL = urljoin(API_URL, 'data/%s/forecast' % VERSION)
 HISTORY_URL = urljoin(API_URL, 'data/%s/history/city' % VERSION)
+COUNTRY_LIST_URL = 'http://openweathermap.org/help/city_list.txt'
 
 
 class OpenWeatherMapAPI(object):
@@ -30,8 +30,13 @@ class OpenWeatherMapAPI(object):
         if 'lang' not in kwargs:
             kwargs['lang'] = 'zh_tw'
 
+
         result = requests.get(path, params=kwargs,
                 headers={'x-api-key': cls.APPID})
+
+        if 'notjson' in kwargs:
+            return result.content
+
         return result.json()
 
     @classmethod
@@ -55,11 +60,30 @@ class OpenWeatherMapAPI(object):
         '''
         return cls._requests(HISTORY_URL, **kwargs)
 
+    def get_country_list(cls, keyby=None):
+        ''' Get country list
+            city list: http://openweathermap.org/help/city_list.txt
+            ['id', 'nm', 'lat', 'lon', 'countryCode']
+        '''
+        content = cStringIO.StringIO(cls._requests(COUNTRY_LIST_URL, notjson=True))
+        csv_files = csv.reader(content, delimiter='\t')
+
+        result = {}
+        csv_files.next()
+        if keyby:
+            key_no = {'id': 0, 'nm': 1, 'lat': 2, 'lon': 3, 'countryCode': 4}
+            result = {i[key_no[keyby]]: i for i in csv_files}
+        else:
+            result = {i[1]: i for i in csv_files}
+
+        return result
+
 if __name__ == '__main__':
     from pprint import pprint
     #pprint(OpenWeatherMapAPI(setting.APPID).get_weather(q='kaohsiung'))
     OPEN_WEATHER_MAPAPI = OpenWeatherMapAPI(setting.APPID)
-    pprint(OPEN_WEATHER_MAPAPI.get_weather(id=1673820))
-    pprint(OpenWeatherMapAPI.get_weather(id=1673820))
-    pprint(OPEN_WEATHER_MAPAPI.get_forecast(id=1673820))
-    pprint(OPEN_WEATHER_MAPAPI.get_history(id=1673820, type='hour'))
+    #pprint(OPEN_WEATHER_MAPAPI.get_weather(id=1673820))
+    #pprint(OpenWeatherMapAPI.get_weather(id=1673820))
+    #pprint(OPEN_WEATHER_MAPAPI.get_forecast(id=1673820))
+    #pprint(OPEN_WEATHER_MAPAPI.get_history(id=1673820, type='hour'))
+    pprint(OPEN_WEATHER_MAPAPI.get_country_list()['Kaohsiung'])
