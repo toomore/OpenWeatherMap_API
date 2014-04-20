@@ -1,6 +1,5 @@
 # -*- coding:utf8 -*-
 ''' OpenWeatherMapAPI '''
-import cStringIO
 import csv
 import os
 import requests
@@ -33,7 +32,7 @@ class OpenWeatherMapAPI(object):
 
 
         result = requests.get(path, params=kwargs,
-                headers={'x-api-key': cls.APPID})
+                              headers={'x-api-key': cls.APPID})
 
         if 'notjson' in kwargs:
             return result.content
